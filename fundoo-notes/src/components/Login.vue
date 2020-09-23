@@ -4,27 +4,20 @@
     <div id="login">Login</div>
     <div id="form-container">
       <form novalidate class="md-layout" @submit.prevent="validateUser">
-        <md-field :class="getValidationClass('UserName')">
-          <label for="UserName">Username</label>
+        <md-field :class="getValidationClass('EmailId')">
+          <label for="EmailId">EmailId</label>
           <md-input
-            name="UserName"
-            id="UserName"
-            v-model="form.UserName"
+            name="EmailId"
+            id="EmailId"
+            v-model="form.EmailId"
             :disabled="sending"
           ></md-input>
-          <span class="md-helper-text"
-            >You can use letters,numbers,period and @.</span
+
+          <span class="md-error" v-if="!$v.form.EmailId.required"
+            >EmailId is required</span
           >
-          <span class="md-error" v-if="!$v.form.UserName.required"
-            >Username is required</span
-          >
-          <span class="md-error" v-else-if="!$v.form.UserName.minlength"
-            >Username should have at least six characters</span
-          >
-          <span
-            class="md-error"
-            v-else-if="!$v.form.UserName.userNameRegex(this.UserName)"
-            >Username Is Invalid (Eg. asdfg@123)</span
+          <span class="md-error" v-else-if="!$v.form.EmailId.minlength"
+            >EmailId should have at least six characters</span
           >
         </md-field>
         <md-field :class="getValidationClass('Password')">
@@ -36,11 +29,9 @@
             type="password"
             :disabled="sending"
           ></md-input>
-          <span class="md-helper-text"
-            >Should Be Alphanumeric and At least One special character.</span
-          >
+
           <span class="md-error" v-if="!$v.form.Password.required"
-            >The Password is required</span
+            >Password is required</span
           >
           <span class="md-error" v-else-if="!$v.form.Password.minlength"
             >Invalid Password</span
@@ -57,10 +48,31 @@
         </md-card-actions>
       </form>
     </div>
+    <md-snackbar
+      :md-position="position"
+      :md-active.sync="isLogin"
+      md-persistent
+    >
+      <span>Login Successful!</span>
+      <md-button type="submit" class="md-primary" :disabled="sending"
+        >Ok</md-button
+      >
+    </md-snackbar>
+    <md-snackbar
+      :md-position="position"
+      :md-active.sync="invalidCredentials"
+      md-persistent
+    >
+      <span>Invalid Credentials!</span>
+      <md-button class="md-primary" @click="invalidCredentials = false"
+        >Ok</md-button
+      >
+    </md-snackbar>
   </div>
 </template>
 
 <script>
+import userService from "../services/userService.js";
 import { validationMixin } from "vuelidate";
 import {
   required,
@@ -74,17 +86,19 @@ export default {
   data() {
     return {
       form: {
-        UserName: null,
+        EmailId: null,
         Password: null
       },
       position: "center",
       sending: false,
+      isLogin: false,
+      invalidCredentials: false,
       token: null
     };
   },
   validations: {
     form: {
-      UserName: {
+      EmailId: {
         required,
         minLength: minLength(6)
       },
@@ -95,6 +109,34 @@ export default {
     }
   },
   methods: {
+    login() {
+      this.sending = true;
+      let user = {
+        email: this.form.EmailId,
+        password: this.form.Password,
+        cartId: ""
+      };
+      userService
+        .login(user)
+        .then(result => {
+          if (result.status == "200") {
+            this.isLogin = true;
+            console.log("Logged In", result.status);
+          }
+        })
+        .then(() => {
+          this.sending = false;
+          this.clearForm();
+        })
+        .catch(error => {
+          console.log("Error:", error.response.status);
+          if (error.response.status == "401") {
+            this.invalidCredentials = true;
+            this.clearForm();
+            this.sending = false;
+          }
+        });
+    },
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
 
@@ -113,7 +155,7 @@ export default {
     },
     clearForm() {
       this.$v.$reset();
-      this.form.UserName = null;
+      this.form.EmailId = null;
       this.form.Password = null;
     }
   }
