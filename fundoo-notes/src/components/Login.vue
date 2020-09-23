@@ -1,6 +1,11 @@
 <template>
   <div id="container">
-    <div id="login-title">Fundoo</div>
+    <div id="login-title">
+      <span id="logo"><i class="fas fa-sticky-note"></i></span>
+      <span class="blue">F</span><span class="red">u</span
+      ><span class="green">n</span><span class="red">D</span
+      ><span class="green">o</span><span class="blue">o</span>
+    </div>
     <div id="login">Login</div>
     <div id="form-container">
       <form novalidate class="md-layout" @submit.prevent="validateUser">
@@ -121,7 +126,8 @@ export default {
         .then(result => {
           if (result.status == "200") {
             this.isLogin = true;
-            console.log("Logged In", result.status);
+            //console.log("Logged In", result.status);
+            window.location.href = "/dashboard";
           }
         })
         .then(() => {
@@ -180,6 +186,10 @@ export default {
   margin-top: 7vh;
   font-family: "Work Sans", sans-serif;
 }
+#logo {
+  color: orange;
+  font-size: 25px;
+}
 #login {
   font-size: 30px;
   line-height: 30px;
@@ -196,5 +206,14 @@ export default {
   position: relative;
   top: 10vh;
   width: 100%;
+}
+.red {
+  color: red;
+}
+.green {
+  color: rgb(26, 202, 26);
+}
+.blue {
+  color: blue;
 }
 </style>
