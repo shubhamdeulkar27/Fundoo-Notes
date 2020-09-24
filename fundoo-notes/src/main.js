@@ -7,8 +7,7 @@ import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 import axios from "axios";
 
-axios.defaults.baseURL =
-  "http://fundoonotes.incubation.bridgelabz.com/api/user";
+axios.defaults.baseURL = "http://fundoonotes.incubation.bridgelabz.com/api";
 
 Vue.use(VueRouter);
 Vue.use(VueMaterial);

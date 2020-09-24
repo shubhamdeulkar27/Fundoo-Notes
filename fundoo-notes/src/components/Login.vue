@@ -1,29 +1,29 @@
 <template>
   <div id="container">
     <div id="login-title">
-      <span id="logo"><i class="fas fa-sticky-note"></i></span>
-      <span class="blue">F</span><span class="red">u</span
-      ><span class="green">n</span><span class="red">D</span
-      ><span class="green">o</span><span class="blue">o</span>
+      <span id="logo">
+        <i class="fas fa-sticky-note"></i>
+      </span>
+      <span class="blue">F</span>
+      <span class="red">u</span>
+      <span class="green">n</span>
+      <span class="red">D</span>
+      <span class="green">o</span>
+      <span class="blue">o</span>
     </div>
-    <div id="login">Login</div>
+    <div id="login">Sign in</div>
+    <div id="login-helper">Use your Google Account</div>
     <div id="form-container">
       <form novalidate class="md-layout" @submit.prevent="validateUser">
         <md-field :class="getValidationClass('EmailId')">
-          <label for="EmailId">EmailId</label>
-          <md-input
-            name="EmailId"
-            id="EmailId"
-            v-model="form.EmailId"
-            :disabled="sending"
-          ></md-input>
+          <label for="EmailId">Email</label>
+          <md-input name="EmailId" id="EmailId" v-model="form.EmailId" :disabled="sending"></md-input>
 
-          <span class="md-error" v-if="!$v.form.EmailId.required"
-            >EmailId is required</span
-          >
-          <span class="md-error" v-else-if="!$v.form.EmailId.minlength"
-            >EmailId should have at least six characters</span
-          >
+          <span class="md-error" v-if="!$v.form.EmailId.required">EmailId is required</span>
+          <span
+            class="md-error"
+            v-else-if="!$v.form.EmailId.minlength"
+          >EmailId should have at least six characters</span>
         </md-field>
         <md-field :class="getValidationClass('Password')">
           <label for="Password">Password</label>
@@ -35,43 +35,26 @@
             :disabled="sending"
           ></md-input>
 
-          <span class="md-error" v-if="!$v.form.Password.required"
-            >Password is required</span
-          >
-          <span class="md-error" v-else-if="!$v.form.Password.minlength"
-            >Invalid Password</span
-          >
+          <span class="md-error" v-if="!$v.form.Password.required">Password is required</span>
+          <span class="md-error" v-else-if="!$v.form.Password.minlength">Invalid Password</span>
         </md-field>
 
         <md-card-actions>
           <md-button
-            type="submit"
-            class="md-raised md-primary"
-            :disabled="sending"
-            >Log In</md-button
-          >
+            class="md-dense md-primary"
+            href="http://fundoonotes.incubation.bridgelabz.com"
+          >Create Account</md-button>
+          <md-button type="submit" class="md-raised md-primary" :disabled="sending">Sign in</md-button>
         </md-card-actions>
       </form>
     </div>
-    <md-snackbar
-      :md-position="position"
-      :md-active.sync="isLogin"
-      md-persistent
-    >
+    <md-snackbar :md-position="position" :md-active.sync="isLogin" md-persistent>
       <span>Login Successful!</span>
-      <md-button type="submit" class="md-primary" :disabled="sending"
-        >Ok</md-button
-      >
+      <md-button type="submit" class="md-primary" :disabled="sending">Ok</md-button>
     </md-snackbar>
-    <md-snackbar
-      :md-position="position"
-      :md-active.sync="invalidCredentials"
-      md-persistent
-    >
+    <md-snackbar :md-position="position" :md-active.sync="invalidCredentials" md-persistent>
       <span>Invalid Credentials!</span>
-      <md-button class="md-primary" @click="invalidCredentials = false"
-        >Ok</md-button
-      >
+      <md-button class="md-primary" @click="invalidCredentials = false">Ok</md-button>
     </md-snackbar>
   </div>
 </template>
@@ -83,7 +66,7 @@ import {
   required,
   email,
   minLength,
-  maxLength
+  maxLength,
 } from "vuelidate/lib/validators";
 export default {
   name: "Login",
@@ -92,26 +75,26 @@ export default {
     return {
       form: {
         EmailId: null,
-        Password: null
+        Password: null,
       },
       position: "center",
       sending: false,
       isLogin: false,
       invalidCredentials: false,
-      token: null
+      token: null,
     };
   },
   validations: {
     form: {
       EmailId: {
         required,
-        minLength: minLength(6)
+        minLength: minLength(6),
       },
       Password: {
         required,
-        minLength: minLength(6)
-      }
-    }
+        minLength: minLength(6),
+      },
+    },
   },
   methods: {
     login() {
@@ -119,11 +102,11 @@ export default {
       let user = {
         email: this.form.EmailId,
         password: this.form.Password,
-        cartId: ""
+        cartId: "",
       };
       userService
         .login(user)
-        .then(result => {
+        .then((result) => {
           if (result.status == "200") {
             this.isLogin = true;
             //console.log("Logged In", result.status);
@@ -134,7 +117,7 @@ export default {
           this.sending = false;
           this.clearForm();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("Error:", error.response.status);
           if (error.response.status == "401") {
             this.invalidCredentials = true;
@@ -148,7 +131,7 @@ export default {
 
       if (field) {
         return {
-          "md-invalid": field.$invalid && field.$dirty
+          "md-invalid": field.$invalid && field.$dirty,
         };
       }
     },
@@ -163,17 +146,17 @@ export default {
       this.$v.$reset();
       this.form.EmailId = null;
       this.form.Password = null;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #container {
   position: relative;
-  left: 30vw;
+  left: 32.5vw;
   top: 10vh;
-  width: 40vw;
+  width: 35vw;
   height: 80vh;
   border-radius: 5px;
   display: flex;
@@ -183,16 +166,22 @@ export default {
 #login-title {
   font-size: 25px;
   line-height: 25px;
-  margin-top: 7vh;
+  margin-top: 8vh;
   font-family: "Work Sans", sans-serif;
 }
 #logo {
   color: orange;
   font-size: 25px;
+  margin-right: 0.5vw;
 }
 #login {
-  font-size: 30px;
-  line-height: 30px;
+  font-size: 27px;
+  line-height: 27px;
+  position: relative;
+  top: 4vh;
+}
+#login-helper {
+  font-size: 17px;
   position: relative;
   top: 7vh;
 }
@@ -203,9 +192,12 @@ export default {
   width: 80%;
 }
 .md-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   position: relative;
   top: 10vh;
-  width: 100%;
+  width: 100vw;
 }
 .red {
   color: red;

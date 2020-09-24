@@ -4,9 +4,16 @@
       <md-button class="md-icon-button" @click="showNavigation = true">
         <md-icon>menu</md-icon>
       </md-button>
-      <span><i class="fas fa-sticky-note"></i></span>
+      <span id="logo">
+        <i class="fas fa-sticky-note"></i>
+      </span>
       <span class="md-title">Fundoo</span>
-
+      <div id="serach-bar">
+        <span>
+          <md-icon>search</md-icon>
+        </span>
+        <input type="text" name="search" placeholder="Search" />
+      </div>
       <div class="md-toolbar-section-end">
         <md-button @click="showSidepanel = true">Favorites</md-button>
       </div>
@@ -14,28 +21,15 @@
 
     <md-drawer :md-active.sync="showNavigation" md-swipeable>
       <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">My App name</span>
+        <span class="md-title">Fundoo Notes</span>
       </md-toolbar>
 
       <md-list>
         <md-list-item>
-          <md-icon>move_to_inbox</md-icon>
-          <span class="md-list-item-text">Inbox</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>send</md-icon>
-          <span class="md-list-item-text">Sent Mail</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>delete</md-icon>
-          <span class="md-list-item-text">Trash</span>
-        </md-list-item>
-
-        <md-list-item>
-          <md-icon>error</md-icon>
-          <span class="md-list-item-text">Spam</span>
+          <md-icon>note</md-icon>
+          <span class="md-list-item-text">
+            <router-link id="def-link" to="/dashboard">Notes</router-link>
+          </span>
         </md-list-item>
       </md-list>
     </md-drawer>
@@ -52,8 +46,8 @@ export default {
   name: "Dashboard",
   data: () => ({
     showNavigation: false,
-    showSidepanel: false
-  })
+    showSidepanel: false,
+  }),
 };
 </script>
 <style lang="scss" scoped>
@@ -79,6 +73,9 @@ export default {
   font-size: 22px;
   background-color: white;
 }
+#logo {
+  margin-left: 0.5vw;
+}
 .md-toolbar.md-theme-default.md-primary .md-title {
   color: black;
 }
@@ -88,5 +85,21 @@ export default {
 .md-toolbar.md-theme-default.md-primary
   .md-button:not([disabled]):not(.md-raised) {
   color: black;
+}
+#def-link {
+  color: black;
+  text-decoration: none;
+}
+#serach-bar {
+  background-color: rgb(236, 234, 234);
+  border-radius: 5px;
+  width: 40vw;
+  height: 7vh;
+  line-height: 7vh;
+  display: flex;
+  flex-direction: row;
+
+  position: relative;
+  left: 15vw;
 }
 </style>
