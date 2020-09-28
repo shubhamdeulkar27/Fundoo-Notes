@@ -1,0 +1,38 @@
+<template>
+  <div id="container">
+    <div id="add-note">
+      <div id="add-note-title">Take a note...</div>
+      <div id="add-note-logo"><md-icon>check_box</md-icon></div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "AddNote",
+  data() {
+    return {
+      isAddNoteClicked: false,
+    };
+  },
+};
+</script>
+<style lang="scss" scoped>
+#add-note {
+  box-shadow: 1px 1px 5px rgba($color: gray, $alpha: 0.7);
+  border-radius: 5px;
+  height: 7vh;
+  width: 45vw;
+  position: relative;
+  left: 27vw;
+  top: 5vh;
+  font-size: 17px;
+  line-height: 7vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  color: rgba($color: gray, $alpha: 0.9);
+}
+</style>
