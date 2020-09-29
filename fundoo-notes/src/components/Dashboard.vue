@@ -22,20 +22,20 @@
           id="serach-input"
         />
       </div>
-      <div class="md-toolbar-section-end">
-        <md-button @click="showSidepanel = true">Favorites</md-button>
-      </div>
+      <div class="md-toolbar-section-end"></div>
     </md-toolbar>
 
     <div id="sub-container">
       <md-drawer :md-active.sync="showNavigation" md-persistent="mini">
         <md-list>
-          <md-list-item @click="showNavigation = !showNavigation">
-            <md-icon>note</md-icon>
-            <span class="md-list-item-text">
-              <router-link id="def-link" to="/dashboard">Notes</router-link>
-            </span>
-          </md-list-item>
+          <router-link to="/notes">
+            <md-list-item>
+              <md-icon>note</md-icon>
+              <span class="md-list-item-text">
+                <router-link id="def-link" to="/dashboard">Notes</router-link>
+              </span>
+            </md-list-item>
+          </router-link>
         </md-list>
       </md-drawer>
 

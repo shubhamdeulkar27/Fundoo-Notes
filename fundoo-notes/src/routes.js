@@ -6,6 +6,9 @@ export default [
   {
     path: "/dashboard",
     component: Dashboard,
-    children: [{ path: "/", component: Notes }]
+    children: [
+      { path: "/", component: Notes },
+      { path: "/notes", component: Notes }
+    ]
   }
 ];

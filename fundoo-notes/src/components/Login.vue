@@ -17,13 +17,19 @@
       <form novalidate class="md-layout" @submit.prevent="validateUser">
         <md-field :class="getValidationClass('EmailId')">
           <label for="EmailId">Email</label>
-          <md-input name="EmailId" id="EmailId" v-model="form.EmailId" :disabled="sending"></md-input>
+          <md-input
+            name="EmailId"
+            id="EmailId"
+            v-model="form.EmailId"
+            :disabled="sending"
+          ></md-input>
 
-          <span class="md-error" v-if="!$v.form.EmailId.required">EmailId is required</span>
-          <span
-            class="md-error"
-            v-else-if="!$v.form.EmailId.minlength"
-          >EmailId should have at least six characters</span>
+          <span class="md-error" v-if="!$v.form.EmailId.required"
+            >EmailId is required</span
+          >
+          <span class="md-error" v-else-if="!$v.form.EmailId.minlength"
+            >EmailId should have at least six characters</span
+          >
         </md-field>
         <md-field :class="getValidationClass('Password')">
           <label for="Password">Password</label>
@@ -35,26 +41,48 @@
             :disabled="sending"
           ></md-input>
 
-          <span class="md-error" v-if="!$v.form.Password.required">Password is required</span>
-          <span class="md-error" v-else-if="!$v.form.Password.minlength">Invalid Password</span>
+          <span class="md-error" v-if="!$v.form.Password.required"
+            >Password is required</span
+          >
+          <span class="md-error" v-else-if="!$v.form.Password.minlength"
+            >Invalid Password</span
+          >
         </md-field>
 
         <md-card-actions>
           <md-button
             class="md-dense md-primary"
             href="http://fundoonotes.incubation.bridgelabz.com"
-          >Create Account</md-button>
-          <md-button type="submit" class="md-raised md-primary" :disabled="sending">Sign in</md-button>
+            >Create Account</md-button
+          >
+          <md-button
+            type="submit"
+            class="md-raised md-primary"
+            :disabled="sending"
+            >Sign in</md-button
+          >
         </md-card-actions>
       </form>
     </div>
-    <md-snackbar :md-position="position" :md-active.sync="isLogin" md-persistent>
+    <md-snackbar
+      :md-position="position"
+      :md-active.sync="isLogin"
+      md-persistent
+    >
       <span>Login Successful!</span>
-      <md-button type="submit" class="md-primary" :disabled="sending">Ok</md-button>
+      <md-button type="submit" class="md-primary" :disabled="sending"
+        >Ok</md-button
+      >
     </md-snackbar>
-    <md-snackbar :md-position="position" :md-active.sync="invalidCredentials" md-persistent>
+    <md-snackbar
+      :md-position="position"
+      :md-active.sync="invalidCredentials"
+      md-persistent
+    >
       <span>Invalid Credentials!</span>
-      <md-button class="md-primary" @click="invalidCredentials = false">Ok</md-button>
+      <md-button class="md-primary" @click="invalidCredentials = false"
+        >Ok</md-button
+      >
     </md-snackbar>
   </div>
 </template>
@@ -109,7 +137,8 @@ export default {
         .then((result) => {
           if (result.status == "200") {
             this.isLogin = true;
-            //console.log("Logged In", result.status);
+            //console.log("Logged In", result.data.id);
+            localStorage.setItem("fundoo-token", result.data.id);
             window.location.href = "/dashboard";
           }
         })
