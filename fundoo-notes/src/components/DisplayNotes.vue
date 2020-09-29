@@ -1,8 +1,8 @@
 <template>
   <div id="container">
     <div id="empty" v-if="isListEmpty">Notes Will Appear here</div>
-    <div id="note-list">
-      <md-card md-with-hover v-for="note in noteList" :key="note.title">
+    <div id="note-list" v-if="!isListEmpty">
+      <md-card md-with-hover v-for="note in notes" :key="note.title">
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
@@ -12,18 +12,17 @@
   </div>
 </template>
 <script>
+import noteServices from "../services/noteServices.js";
+import { EventBus } from "../event-bus.js";
 export default {
   name: "DisplayNotes",
-  props: {
-    notes: Array,
-  },
-  beforeMount() {
-    this.checkNoteList();
+  created() {
+    this.fetchNotes();
   },
   data() {
     return {
       isListEmpty: true,
-      noteList: this.notes,
+      notes: [],
     };
   },
   methods: {
@@ -33,6 +32,23 @@ export default {
         this.isListEmpty = false;
       }
     },
+    fetchNotes() {
+      noteServices
+        .getNotes()
+        .then((result) => {
+          this.notes = result.data.data.data;
+          console.log("Ar", this.notes);
+          this.checkNoteList();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    EventBus.$on("FetchNotes", (fetchNotes) => {
+      this.fetchNotes();
+    });
   },
 };
 </script>
@@ -54,12 +70,13 @@ export default {
 }
 #note-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto auto;
   row-gap: 1vw;
   column-gap: 1vh;
 }
 .md-card {
   border-radius: 5px;
+  height: fit-content;
 }
 .md-title {
   font-size: 17px;

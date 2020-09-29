@@ -46,6 +46,7 @@
 
 <script>
 import noteServices from "../services/noteServices.js";
+import { EventBus } from "../event-bus.js";
 export default {
   name: "AddNote",
   data() {
@@ -59,6 +60,7 @@ export default {
       labelledList: [],
       reminder: TimeRanges,
       collaborators: [],
+      fetchNotes: false,
     };
   },
 
@@ -86,6 +88,8 @@ export default {
         .then((result) => {
           console.log(result);
           this.AddNoteClicked();
+          this.fetchNotes = true;
+          EventBus.$emit("FetchNotes", this.fetchNotes);
         })
         .catch((error) => {
           console.log("Error", error);

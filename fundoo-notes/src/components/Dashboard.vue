@@ -71,6 +71,7 @@ export default {
   padding: 16px;
   width: 100vw;
   height: 90vh;
+  overflow: auto;
 }
 
 .md-toolbar.md-theme-default.md-primary {
