@@ -9,14 +9,17 @@
       </div>
     </div>
     <div class="add-note note-clicked" v-if="isAddNoteClicked">
-      <div>
-        <input
-          type="text"
-          name="NoteTitle"
-          placeholder="Title"
-          class="input title"
-          v-model="title"
-        />
+      <div id="add-note-top">
+        <div>
+          <input
+            type="text"
+            name="NoteTitle"
+            placeholder="Title"
+            class="input title"
+            v-model="title"
+          />
+        </div>
+        <md-icon>push_pin</md-icon>
       </div>
       <div>
         <textarea
@@ -25,16 +28,17 @@
           placeholder="Take a note..."
           class="input note-text"
           v-model="description"
+          @input="mixin_autoResize_resize"
         ></textarea>
       </div>
       <div id="add-note-bottom">
         <div id="add-note-b-left">
-          <div><md-icon>add_alert</md-icon></div>
-          <div><md-icon>person_add_alt_1</md-icon></div>
-          <div><md-icon>palette</md-icon></div>
-          <div><md-icon>insert_photo</md-icon></div>
-          <div><md-icon>archive</md-icon></div>
-          <div><md-icon>more_vert</md-icon></div>
+          <md-icon>add_alert</md-icon>
+          <md-icon>person_add_alt_1</md-icon>
+          <md-icon>palette</md-icon>
+          <md-icon>insert_photo</md-icon>
+          <md-icon>archive</md-icon>
+          <md-icon>more_vert</md-icon>
         </div>
         <div id="add-note-b-right">
           <md-button @click="AddNewNote()">Close </md-button>
@@ -47,8 +51,10 @@
 <script>
 import noteServices from "../services/noteServices.js";
 import { EventBus } from "../event-bus.js";
+import mixinAutoResize from "../autoResize.js";
 export default {
   name: "AddNote",
+  mixins: [mixinAutoResize],
   data() {
     return {
       isAddNoteClicked: false,
@@ -69,7 +75,7 @@ export default {
       this.isAddNoteClicked = !this.isAddNoteClicked;
     },
     AddNewNote() {
-      if (this.title == null && this.description == null) {
+      if (this.title == null || this.description == null) {
         this.AddNoteClicked();
         return;
       }
@@ -90,10 +96,14 @@ export default {
           this.AddNoteClicked();
           this.fetchNotes = true;
           EventBus.$emit("FetchNotes", this.fetchNotes);
+          this.clearData();
         })
         .catch((error) => {
           console.log("Error", error);
         });
+    },
+    clearData() {
+      (this.title = null), (this.description = null);
     },
   },
 };
@@ -119,6 +129,11 @@ export default {
 .note-clicked {
   flex-direction: column;
   height: auto;
+}
+#add-note-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 #add-note-logo {
   display: flex;

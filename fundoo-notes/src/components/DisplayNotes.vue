@@ -2,11 +2,20 @@
   <div id="container">
     <div id="empty" v-if="isListEmpty">Notes Will Appear here</div>
     <div id="note-list" v-if="!isListEmpty">
-      <md-card md-with-hover v-for="note in notes" :key="note.title">
+      <md-card md-with-hover v-for="note in notes" :key="note.index">
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
         </md-card-content>
+        <md-card-actions>
+          <md-icon id="push-pin">push_pin</md-icon>
+          <md-icon>add_alert</md-icon>
+          <md-icon>person_add_alt_1</md-icon>
+          <md-icon>palette</md-icon>
+          <md-icon>insert_photo</md-icon>
+          <md-icon>archive</md-icon>
+          <md-icon>more_vert</md-icon></md-card-actions
+        >
       </md-card>
     </div>
   </div>
@@ -61,6 +70,11 @@ export default {
 
   height: auto;
 }
+#push-pin {
+  position: absolute;
+  top: 1vh;
+  right: 0.5vw;
+}
 #empty {
   font-size: 40px;
   line-height: 40px;
@@ -70,7 +84,7 @@ export default {
 }
 #note-list {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   row-gap: 1vw;
   column-gap: 1vh;
 }
@@ -86,5 +100,10 @@ export default {
 .md-card-content {
   text-align: left;
   opacity: 0.8;
+}
+.md-card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>
