@@ -2,7 +2,12 @@
   <div id="container">
     <div id="empty" v-if="isListEmpty">Notes Will Appear here</div>
     <div id="note-list" v-if="!isListEmpty">
-      <md-card md-with-hover v-for="note in notes" :key="note.index">
+      <md-card
+        md-with-hover
+        v-for="note in notes"
+        :key="note.index"
+        v-if="!note.isDeleted"
+      >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
