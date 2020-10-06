@@ -6,5 +6,8 @@ export default {
   },
   getNotes() {
     return httpServices.get("notes/getNotesList");
+  },
+  pinUnpinNotes(data) {
+    return httpServices.post("notes/pinUnpinNotes", data);
   }
 };

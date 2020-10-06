@@ -19,7 +19,7 @@
             v-model="title"
           />
         </div>
-        <md-button class="md-icon-button" @click="isPinned = !isPinned"
+        <md-button class="md-icon-button" @click="isPined = !isPined"
           ><md-icon>push_pin</md-icon></md-button
         >
       </div>
@@ -60,7 +60,7 @@
       </div>
       <md-snackbar
         :md-position="position"
-        :md-active.sync="isPinned"
+        :md-active.sync="isPined"
         md-persitant
       >
         <span>New Note Pinned</span>
@@ -88,7 +88,7 @@ export default {
       isAddNoteClicked: false,
       title: null,
       description: null,
-      isPinned: false,
+      isPined: false,
       color: "#FFFFFF",
       isArchived: false,
       labelledList: [],
@@ -112,7 +112,7 @@ export default {
       let note = {
         title: this.title,
         description: this.description,
-        isPined: this.isPinned,
+        isPined: this.isPined,
         color: this.color,
         isArchived: this.isArchived,
         labelIdList: this.labelledList,
@@ -135,7 +135,7 @@ export default {
     clearData() {
       this.title = null;
       this.description = null;
-      this.isPinned = false;
+      this.isPined = false;
       this.isArchived = false;
     }
   }

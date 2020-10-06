@@ -4,39 +4,54 @@
       <Spinner id="custom-spinner" v-if="notesLoadding" /> Notes Will Appear
       here
     </div>
-
+    <div class="list-title" v-if="!isListEmpty">Pinned</div>
     <div id="note-list" v-if="!isListEmpty">
       <md-card
         md-with-hover
         v-for="note in notes.slice().reverse()"
         :key="note.index"
-        v-if="!note.isDeleted && !note.isArchived"
+        v-if="!note.isDeleted && !note.isArchived && note.isPined"
       >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
         </md-card-content>
         <md-card-actions>
-          <md-button id="push-pin" class="md-icon-button" @click="!isPinned"
-            ><md-icon>push_pin</md-icon></md-button
+          <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
+            >push_pin</md-icon
           >
-          <md-button class="md-icon-button"
-            ><md-icon>add_alert</md-icon></md-button
+          <md-icon>add_alert</md-icon>
+          <md-icon>person_add_alt_1</md-icon>
+          <md-icon>palette</md-icon>
+          <md-icon>insert_photo</md-icon>
+          <md-icon @click="!isArchived">archive</md-icon>
+          <md-icon>delete</md-icon>
+        </md-card-actions>
+      </md-card>
+    </div>
+    <br />
+    <div class="list-title" v-if="!isListEmpty">Other</div>
+    <div id="note-list" v-if="!isListEmpty">
+      <md-card
+        md-with-hover
+        v-for="note in notes.slice().reverse()"
+        :key="note.index"
+        v-if="!note.isDeleted && !note.isArchived && !note.isPined"
+      >
+        <md-card-header class="md-title">{{ note.title }}</md-card-header>
+        <md-card-content>
+          {{ note.description }}
+        </md-card-content>
+        <md-card-actions>
+          <md-icon id="push-pin" @click.native="PinUnpinNotes(note)"
+            >push_pin</md-icon
           >
-          <md-button class="md-icon-button"
-            ><md-icon>person_add_alt_1</md-icon></md-button
-          >
-          <md-button class="md-icon-button"
-            ><md-icon>palette</md-icon></md-button
-          >
-          <md-button class="md-icon-button">
-            <md-icon>insert_photo</md-icon>
-          </md-button>
-          <md-button class="md-icon-button">
-            <md-icon @click="!isArchived">archive</md-icon></md-button
-          ><md-button class="md-icon-button">
-            <md-icon>delete</md-icon></md-button
-          >
+          <md-icon>add_alert</md-icon>
+          <md-icon>person_add_alt_1</md-icon>
+          <md-icon>palette</md-icon>
+          <md-icon>insert_photo</md-icon>
+          <md-icon @click="!isArchived">archive</md-icon>
+          <md-icon>delete</md-icon>
         </md-card-actions>
       </md-card>
     </div>
@@ -57,7 +72,7 @@ export default {
       notes: [],
       title: null,
       description: null,
-      isPinned: false,
+      isPined: false,
       color: "#FFFFFF",
       isArchived: false,
       labelledList: [],
@@ -87,6 +102,22 @@ export default {
           console.log(error);
           this.notesLoadding = false;
         });
+    },
+
+    PinUnpinNotes(note) {
+      let pinData = {
+        isPined: !note.isPined,
+        noteIdList: [note.id]
+      };
+      noteServices
+        .pinUnpinNotes(pinData)
+        .then(result => {
+          console.log(result);
+          this.fetchNotes();
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   mounted() {
@@ -102,7 +133,7 @@ export default {
 <style lang="scss" scoped>
 #container {
   width: 65vw;
-  left: 10vw;
+  left: 15vw;
   position: relative;
   top: 10vh;
   height: auto;
@@ -127,6 +158,11 @@ export default {
   row-gap: 1vw;
   column-gap: 1vh;
 }
+.list-title {
+  text-align: left;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
 .md-card {
   border-radius: 5px;
   height: fit-content;
@@ -144,7 +180,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: unset;
+  padding: 1vh;
 }
 #custom-spinner {
   position: relative;
