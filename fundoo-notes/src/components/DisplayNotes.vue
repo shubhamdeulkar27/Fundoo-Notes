@@ -1,30 +1,43 @@
 <template>
   <div id="container">
-    <Spinner id="custom-spinner" v-if="notesLoadding" />
-    <div id="empty" v-if="isListEmpty">Notes Will Appear here</div>
+    <div id="empty" v-if="isListEmpty">
+      <Spinner id="custom-spinner" v-if="notesLoadding" /> Notes Will Appear
+      here
+    </div>
 
     <div id="note-list" v-if="!isListEmpty">
       <md-card
         md-with-hover
-        v-for="note in notes"
+        v-for="note in notes.slice().reverse()"
         :key="note.index"
-        v-if="!note.isDeleted"
-        @mouseover.native="cardAction = true"
-        @mouseleave.native="cardAction = false"
+        v-if="!note.isDeleted && !note.isArchived"
       >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
         </md-card-content>
-        <md-card-actions v-if="cardAction">
-          <md-icon id="push-pin">push_pin</md-icon>
-          <md-icon>add_alert</md-icon>
-          <md-icon>person_add_alt_1</md-icon>
-          <md-icon>palette</md-icon>
-          <md-icon>insert_photo</md-icon>
-          <md-icon>archive</md-icon>
-          <md-icon>more_vert</md-icon></md-card-actions
-        >
+        <md-card-actions>
+          <md-button id="push-pin" class="md-icon-button" @click="!isPinned"
+            ><md-icon>push_pin</md-icon></md-button
+          >
+          <md-button class="md-icon-button"
+            ><md-icon>add_alert</md-icon></md-button
+          >
+          <md-button class="md-icon-button"
+            ><md-icon>person_add_alt_1</md-icon></md-button
+          >
+          <md-button class="md-icon-button"
+            ><md-icon>palette</md-icon></md-button
+          >
+          <md-button class="md-icon-button">
+            <md-icon>insert_photo</md-icon>
+          </md-button>
+          <md-button class="md-icon-button">
+            <md-icon @click="!isArchived">archive</md-icon></md-button
+          ><md-button class="md-icon-button">
+            <md-icon>delete</md-icon></md-button
+          >
+        </md-card-actions>
       </md-card>
     </div>
   </div>
@@ -42,7 +55,14 @@ export default {
     return {
       isListEmpty: true,
       notes: [],
-      cardAction: false,
+      title: null,
+      description: null,
+      isPinned: false,
+      color: "#FFFFFF",
+      isArchived: false,
+      labelledList: [],
+      reminder: TimeRanges,
+      collaborators: [],
       notesLoadding: false
     };
   },
@@ -82,10 +102,9 @@ export default {
 <style lang="scss" scoped>
 #container {
   width: 65vw;
-  left: 15vw;
+  left: 10vw;
   position: relative;
   top: 10vh;
-
   height: auto;
 }
 #push-pin {
@@ -99,6 +118,8 @@ export default {
   height: 50vh;
   padding-top: 22vh;
   opacity: 0.4;
+  position: relative;
+  left: 5vw;
 }
 #note-list {
   display: grid;
@@ -123,9 +144,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: unset;
 }
 #custom-spinner {
   position: relative;
-  top: 15vh;
+  top: -10vh;
 }
 </style>

@@ -48,8 +48,8 @@ export default {
   name: "Dashboard",
   data: () => ({
     showNavigation: false,
-    showSidepanel: false,
-  }),
+    showSidepanel: false
+  })
 };
 </script>
 <style lang="scss" scoped>
@@ -62,7 +62,7 @@ export default {
 
 // Demo purposes only
 .md-drawer {
-  width: 230px;
+  width: 175px;
   height: 90vh;
   max-width: calc(100vw - 125px);
 }

@@ -19,7 +19,9 @@
             v-model="title"
           />
         </div>
-        <md-icon>push_pin</md-icon>
+        <md-button class="md-icon-button" @click="isPinned = !isPinned"
+          ><md-icon>push_pin</md-icon></md-button
+        >
       </div>
       <div>
         <textarea
@@ -33,17 +35,43 @@
       </div>
       <div id="add-note-bottom">
         <div id="add-note-b-left">
-          <md-icon>add_alert</md-icon>
-          <md-icon>person_add_alt_1</md-icon>
-          <md-icon>palette</md-icon>
-          <md-icon>insert_photo</md-icon>
-          <md-icon>archive</md-icon>
-          <md-icon>more_vert</md-icon>
+          <md-button class="md-icon-button">
+            <md-icon>add_alert</md-icon>
+          </md-button>
+          <md-button class="md-icon-button">
+            <md-icon>person_add_alt_1</md-icon>
+          </md-button>
+          <md-button class="md-icon-button">
+            <md-icon>palette</md-icon>
+          </md-button>
+          <md-button class="md-icon-button">
+            <md-icon>insert_photo</md-icon>
+          </md-button>
+          <md-button class="md-icon-button" @click="isArchived = !isArchived">
+            <md-icon>archive</md-icon>
+          </md-button>
+          <md-button class="md-icon-button" @click="clearData()">
+            <md-icon>delete</md-icon>
+          </md-button>
         </div>
         <div id="add-note-b-right">
           <md-button @click="AddNewNote()">Close </md-button>
         </div>
       </div>
+      <md-snackbar
+        :md-position="position"
+        :md-active.sync="isPinned"
+        md-persitant
+      >
+        <span>New Note Pinned</span>
+      </md-snackbar>
+      <md-snackbar
+        :md-position="position"
+        :md-active.sync="isArchived"
+        md-persitant
+      >
+        <span>New Note Archived</span>
+      </md-snackbar>
     </div>
   </div>
 </template>
@@ -67,6 +95,7 @@ export default {
       reminder: TimeRanges,
       collaborators: [],
       fetchNotes: false,
+      position: "left"
     };
   },
 
@@ -77,6 +106,7 @@ export default {
     AddNewNote() {
       if (this.title == null || this.description == null) {
         this.AddNoteClicked();
+        this.clearData();
         return;
       }
       let note = {
@@ -87,25 +117,28 @@ export default {
         isArchived: this.isArchived,
         labelIdList: this.labelledList,
         reminder: this.reminder,
-        collaberators: this.collaborators,
+        collaberators: this.collaborators
       };
       noteServices
         .addNote(note)
-        .then((result) => {
+        .then(result => {
           console.log(result);
           this.AddNoteClicked();
           this.fetchNotes = true;
           EventBus.$emit("FetchNotes", this.fetchNotes);
           this.clearData();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("Error", error);
         });
     },
     clearData() {
-      (this.title = null), (this.description = null);
-    },
-  },
+      this.title = null;
+      this.description = null;
+      this.isPinned = false;
+      this.isArchived = false;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -146,6 +179,7 @@ export default {
   margin-left: 1vw;
   font-size: 10px;
 }
+
 .input {
   outline: none;
   border: none;
@@ -171,5 +205,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+#pinned {
+  background-color: gray;
 }
 </style>
