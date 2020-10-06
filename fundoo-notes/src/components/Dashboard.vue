@@ -36,6 +36,24 @@
               </span>
             </md-list-item>
           </router-link>
+
+          <router-link to="/archived">
+            <md-list-item>
+              <md-icon>archive</md-icon>
+              <span class="md-list-item-text">
+                <router-link id="def-link" to="/dashboard">Archive</router-link>
+              </span>
+            </md-list-item>
+          </router-link>
+
+          <router-link to="/trashed">
+            <md-list-item>
+              <md-icon>delete</md-icon>
+              <span class="md-list-item-text">
+                <router-link id="def-link" to="/dashboard">Trash</router-link>
+              </span>
+            </md-list-item>
+          </router-link>
         </md-list>
       </md-drawer>
 
