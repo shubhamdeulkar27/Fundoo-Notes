@@ -9,5 +9,8 @@ export default {
   },
   pinUnpinNotes(data) {
     return httpServices.post("notes/pinUnpinNotes", data);
+  },
+  archiveNote(data) {
+    return httpServices.post("notes/archiveNotes", data);
   }
 };

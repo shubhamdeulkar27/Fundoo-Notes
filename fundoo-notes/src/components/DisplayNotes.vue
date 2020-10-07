@@ -18,10 +18,12 @@
         </md-card-content>
 
         <div class="cardActions">
-          <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
-            >push_pin</md-icon
-          >
-          <ReminderIcon />
+          <PinIcon
+            id="push-pin"
+            v-bind:note="note"
+            @fetchNotes="fetchNotes()"
+          />
+          <ReminderIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
           <ColorIcon />
           <ArchiveIcon />
           <DeleteIcon />
@@ -36,18 +38,18 @@
         v-for="note in notes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && !note.isPined"
-        @mouseover="isCardAction = true"
-        @mouseleave="isCardAction = false"
       >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
         </md-card-content>
 
-        <div class="cardActions" v-if="isCardAction">
-          <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
-            >push_pin</md-icon
-          >
+        <div class="cardActions">
+          <PinIcon
+            id="push-pin"
+            v-bind:note="note"
+            @fetchNotes="fetchNotes()"
+          />
           <ReminderIcon />
           <ColorIcon />
           <ArchiveIcon />
@@ -65,6 +67,7 @@ import ArchiveIcon from "./ArchiveIcon.vue";
 import DeleteIcon from "./DeleteIcon.vue";
 import ColorIcon from "./ColorIcon.vue";
 import ReminderIcon from "./ReminderIcon.vue";
+import PinIcon from "./PinIcon.vue";
 
 export default {
   name: "DisplayNotes",
@@ -73,7 +76,8 @@ export default {
     DeleteIcon,
     Spinner,
     ColorIcon,
-    ReminderIcon
+    ReminderIcon,
+    PinIcon
   },
   created() {
     this.fetchNotes();
@@ -115,22 +119,6 @@ export default {
         .catch(error => {
           console.log(error);
           this.notesLoadding = false;
-        });
-    },
-
-    PinUnpinNotes(note) {
-      let pinData = {
-        isPined: !note.isPined,
-        noteIdList: [note.id]
-      };
-      noteServices
-        .pinUnpinNotes(pinData)
-        .then(result => {
-          console.log(result);
-          this.fetchNotes();
-        })
-        .catch(error => {
-          console.log(error);
         });
     }
   },
@@ -183,6 +171,9 @@ export default {
 }
 .card:hover {
   border: 1px solid rgba($color: gray, $alpha: 0.8);
+  .cardActions {
+    opacity: 100%;
+  }
 }
 .md-title {
   font-size: 17px;
@@ -192,12 +183,10 @@ export default {
 .md-card-content {
   text-align: left;
   opacity: 0.8;
+  padding-bottom: 0px;
 }
 .md-icon {
   cursor: pointer;
-}
-.hidden {
-  display: none;
 }
 .cardActions {
   display: flex;
@@ -205,8 +194,8 @@ export default {
   justify-content: space-between;
   padding: 1vw;
   padding-bottom: 1vh;
+  opacity: 0%;
 }
-
 #custom-spinner {
   position: relative;
   top: -10vh;
