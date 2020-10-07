@@ -6,8 +6,8 @@
     </div>
     <div class="list-title" v-if="!isListEmpty">Pinned</div>
     <div id="note-list" v-if="!isListEmpty">
-      <md-card
-        md-with-hover
+      <div
+        class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && note.isPined"
@@ -16,44 +16,45 @@
         <md-card-content>
           {{ note.description }}
         </md-card-content>
-        <md-card-actions>
+
+        <div class="cardActions">
           <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
             >push_pin</md-icon
           >
           <md-icon>add_alert</md-icon>
-          <md-icon>person_add_alt_1</md-icon>
           <md-icon>palette</md-icon>
-          <md-icon>insert_photo</md-icon>
           <md-icon @click="!isArchived">archive</md-icon>
           <md-icon>delete</md-icon>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </div>
     <br />
     <div class="list-title" v-if="!isListEmpty">Other</div>
     <div id="note-list" v-if="!isListEmpty">
-      <md-card
-        md-with-hover
+      <div
+        class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && !note.isPined"
+        @mouseover="isCardAction = true"
+        @mouseleave="isCardAction = false"
       >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>
           {{ note.description }}
         </md-card-content>
-        <md-card-actions>
-          <md-icon id="push-pin" @click.native="PinUnpinNotes(note)"
+
+        <div class="cardActions" v-if="isCardAction">
+          <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
             >push_pin</md-icon
           >
           <md-icon>add_alert</md-icon>
-          <md-icon>person_add_alt_1</md-icon>
           <md-icon>palette</md-icon>
-          <md-icon>insert_photo</md-icon>
           <md-icon @click="!isArchived">archive</md-icon>
+          <ArchiveIcon />
           <md-icon>delete</md-icon>
-        </md-card-actions>
-      </md-card>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,13 +62,21 @@
 import noteServices from "../services/noteServices.js";
 import { EventBus } from "../event-bus.js";
 import Spinner from "vue-simple-spinner";
+import ArchiveIcon from "./ArchiveIcon.vue";
+import DeleteIcon from "./DeleteIcon.vue";
+
 export default {
   name: "DisplayNotes",
+  components: {
+    ArchiveIcon
+  },
   created() {
     this.fetchNotes();
   },
+
   data() {
     return {
+      isCardAction: false,
       isListEmpty: true,
       notes: [],
       title: null,
@@ -140,8 +149,8 @@ export default {
 }
 #push-pin {
   position: absolute;
-  top: 1vh;
-  right: 0.5vw;
+  top: 2vh;
+  right: 1vw;
 }
 #empty {
   font-size: 40px;
@@ -163,7 +172,9 @@ export default {
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
-.md-card {
+.card {
+  position: relative;
+  box-shadow: 0px 0px 5px 1px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
   height: fit-content;
 }
@@ -176,12 +187,19 @@ export default {
   text-align: left;
   opacity: 0.8;
 }
-.md-card-actions {
+.md-icon {
+  cursor: pointer;
+}
+.hidden {
+  display: none;
+}
+.cardActions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 1vh;
 }
+
 #custom-spinner {
   position: relative;
   top: -10vh;

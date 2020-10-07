@@ -12,9 +12,8 @@ export default {
   name: "Notes",
   components: {
     AddNote,
-    DisplayNotes,
-  },
+    DisplayNotes
+  }
 };
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

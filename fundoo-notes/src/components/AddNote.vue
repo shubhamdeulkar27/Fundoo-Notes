@@ -19,9 +19,7 @@
             v-model="title"
           />
         </div>
-        <md-button class="md-icon-button" @click="isPined = !isPined"
-          ><md-icon>push_pin</md-icon></md-button
-        >
+        <md-icon @click="isPined = !isPined">push_pin</md-icon>
       </div>
       <div>
         <textarea
@@ -35,24 +33,10 @@
       </div>
       <div id="add-note-bottom">
         <div id="add-note-b-left">
-          <md-button class="md-icon-button">
-            <md-icon>add_alert</md-icon>
-          </md-button>
-          <md-button class="md-icon-button">
-            <md-icon>person_add_alt_1</md-icon>
-          </md-button>
-          <md-button class="md-icon-button">
-            <md-icon>palette</md-icon>
-          </md-button>
-          <md-button class="md-icon-button">
-            <md-icon>insert_photo</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" @click="isArchived = !isArchived">
-            <md-icon>archive</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" @click="clearData()">
-            <md-icon>delete</md-icon>
-          </md-button>
+          <md-icon>add_alert</md-icon>
+          <md-icon>palette</md-icon>
+          <md-icon @click="isArchived = !isArchived">archive</md-icon>
+          <md-icon @click="clearData()">delete</md-icon>
         </div>
         <div id="add-note-b-right">
           <md-button @click="AddNewNote()">Close </md-button>
