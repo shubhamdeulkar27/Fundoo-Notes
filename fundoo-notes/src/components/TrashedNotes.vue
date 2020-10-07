@@ -1,5 +1,7 @@
 <template>
-  <div id="trashed-container"></div>
+  <div id="trashed-container">
+    <div id="empty">Trashed Notes Will Appera Here</div>
+  </div>
 </template>
 <script>
 export default {

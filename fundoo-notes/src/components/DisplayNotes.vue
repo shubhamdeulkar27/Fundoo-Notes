@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="display-note-container">
     <div id="empty" v-if="isListEmpty">
       <Spinner id="custom-spinner" v-if="notesLoadding" /> Notes Will Appear
       here
@@ -21,10 +21,10 @@
           <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
             >push_pin</md-icon
           >
-          <md-icon>add_alert</md-icon>
-          <md-icon>palette</md-icon>
-          <md-icon @click="!isArchived">archive</md-icon>
-          <md-icon>delete</md-icon>
+          <ReminderIcon />
+          <ColorIcon />
+          <ArchiveIcon />
+          <DeleteIcon />
         </div>
       </div>
     </div>
@@ -48,11 +48,10 @@
           <md-icon @click.native="PinUnpinNotes(note)" id="push-pin"
             >push_pin</md-icon
           >
-          <md-icon>add_alert</md-icon>
-          <md-icon>palette</md-icon>
-          <md-icon @click="!isArchived">archive</md-icon>
+          <ReminderIcon />
+          <ColorIcon />
           <ArchiveIcon />
-          <md-icon>delete</md-icon>
+          <DeleteIcon />
         </div>
       </div>
     </div>
@@ -64,11 +63,17 @@ import { EventBus } from "../event-bus.js";
 import Spinner from "vue-simple-spinner";
 import ArchiveIcon from "./ArchiveIcon.vue";
 import DeleteIcon from "./DeleteIcon.vue";
+import ColorIcon from "./ColorIcon.vue";
+import ReminderIcon from "./ReminderIcon.vue";
 
 export default {
   name: "DisplayNotes",
   components: {
-    ArchiveIcon
+    ArchiveIcon,
+    DeleteIcon,
+    Spinner,
+    ColorIcon,
+    ReminderIcon
   },
   created() {
     this.fetchNotes();
@@ -133,14 +138,11 @@ export default {
     EventBus.$on("FetchNotes", fetchNotes => {
       this.fetchNotes();
     });
-  },
-  components: {
-    Spinner
   }
 };
 </script>
 <style lang="scss" scoped>
-#container {
+#display-note-container {
   width: 65vw;
   left: 15vw;
   position: relative;
@@ -177,6 +179,10 @@ export default {
   box-shadow: 0px 0px 5px 1px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
   height: fit-content;
+  border: 1px solid white;
+}
+.card:hover {
+  border: 1px solid rgba($color: gray, $alpha: 0.8);
 }
 .md-title {
   font-size: 17px;
@@ -197,7 +203,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1vh;
+  padding: 1vw;
+  padding-bottom: 1vh;
 }
 
 #custom-spinner {

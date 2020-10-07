@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="add-note-container">
     <div class="add-note" v-if="!isAddNoteClicked" @click="AddNoteClicked">
       <div id="add-note-title">Take a note...</div>
       <div id="add-note-logo">
