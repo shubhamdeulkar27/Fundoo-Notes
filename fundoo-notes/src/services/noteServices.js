@@ -18,5 +18,11 @@ export default {
   },
   getArchivedNotes() {
     return httpServices.get("notes/getArchiveNotesList");
+  },
+  getTrashedNotes() {
+    return httpServices.get("notes/getTrashNotesList");
+  },
+  deleteNoteForever(data) {
+    return httpServices.post("notes/deleteForeverNotes", data);
   }
 };

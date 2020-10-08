@@ -2,7 +2,7 @@
   <div id="archived-container">
     <div id="empty" v-if="isNoteListEmpty">
       <Spinner id="custom-spinner" v-if="notesLoadding" />Archived Notes Will
-      Apper Here
+      Appear Here
     </div>
 
     <div id="note-list" v-if="!isNoteListEmpty">
