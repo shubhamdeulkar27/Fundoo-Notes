@@ -4,7 +4,7 @@
       <Spinner id="custom-spinner" v-if="notesLoadding" /> Notes Will Appear
       here
     </div>
-    <div class="list-title" v-if="!isListEmpty">Pinned</div>
+
     <div id="note-list" v-if="!isListEmpty">
       <div
         class="card"
@@ -23,15 +23,15 @@
             v-bind:note="note"
             @fetchNotes="fetchNotes()"
           />
-          <ReminderIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
+          <ReminderIcon />
           <ColorIcon />
-          <ArchiveIcon />
-          <DeleteIcon />
+          <ArchiveIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
+          <DeleteIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
         </div>
       </div>
     </div>
     <br />
-    <div class="list-title" v-if="!isListEmpty">Other</div>
+
     <div id="note-list" v-if="!isListEmpty">
       <div
         class="card"
@@ -52,8 +52,12 @@
           />
           <ReminderIcon />
           <ColorIcon />
-          <ArchiveIcon />
-          <DeleteIcon />
+          <ArchiveIcon
+            v-bind:note="note"
+            noteType="Display"
+            @fetchNotes="fetchNotes()"
+          />
+          <DeleteIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
         </div>
       </div>
     </div>
@@ -101,7 +105,6 @@ export default {
   },
   methods: {
     checkNoteList() {
-      console.log("Check called");
       if (this.notes.length > 0) {
         this.isListEmpty = false;
       }
@@ -112,7 +115,6 @@ export default {
         .getNotes()
         .then(result => {
           this.notes = result.data.data.data;
-          console.log("Ar", this.notes);
           this.checkNoteList();
           this.notesLoadding = false;
         })
@@ -149,7 +151,7 @@ export default {
   padding-top: 22vh;
   opacity: 0.4;
   position: relative;
-  left: 5vw;
+  left: 2vw;
 }
 #note-list {
   display: grid;

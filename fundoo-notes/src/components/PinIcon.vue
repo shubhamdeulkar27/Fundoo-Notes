@@ -12,7 +12,7 @@
       md-persistent
     >
       <span>Error Occured!</span>
-      <md-button class="md-primary" @click="isError = false">Retry</md-button>
+      <md-button class="md-primary" @click="isError = false">Ok</md-button>
     </md-snackbar>
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
   name: "PinIcon",
   data() {
     return {
-      isError: false
+      isError: false,
+      position: "left"
     };
   },
   props: {
@@ -53,6 +54,6 @@ export default {
   cursor: pointer;
 }
 #pinned {
-  color: black;
+  color: orange;
 }
 </style>

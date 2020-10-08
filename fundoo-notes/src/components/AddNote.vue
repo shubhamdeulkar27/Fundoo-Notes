@@ -19,7 +19,7 @@
             v-model="title"
           />
         </div>
-        <md-icon @click="isPined = !isPined">push_pin</md-icon>
+        <md-icon @click.native="isPined = !isPined">push_pin</md-icon>
       </div>
       <div>
         <textarea
@@ -35,8 +35,8 @@
         <div id="add-note-b-left">
           <md-icon>add_alert</md-icon>
           <md-icon>palette</md-icon>
-          <md-icon @click="isArchived = !isArchived">archive</md-icon>
-          <md-icon @click="clearData()">delete</md-icon>
+          <md-icon @click.native="isArchived = !isArchived">archive</md-icon>
+          <md-icon @click.native="clearData()">delete</md-icon>
         </div>
         <div id="add-note-b-right">
           <md-button @click="AddNewNote()">Close </md-button>
