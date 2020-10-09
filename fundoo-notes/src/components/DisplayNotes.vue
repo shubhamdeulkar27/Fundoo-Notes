@@ -147,6 +147,9 @@ export default {
     callUpdateNote(note) {
       this.updateNote = note;
       this.showDialog = true;
+    },
+    closeUpdate() {
+      this.showDialog = false;
     }
   },
   mounted() {

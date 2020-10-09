@@ -10,6 +10,7 @@
         class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
+        v-bind:style="{ background: note.color }"
       >
         <md-card-header class="md-title">{{ note.title }}</md-card-header>
         <md-card-content>

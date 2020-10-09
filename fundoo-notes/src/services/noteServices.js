@@ -27,5 +27,8 @@ export default {
   },
   changeNoteColor(data) {
     return httpServices.post("notes/changesColorNotes", data);
+  },
+  updateNote(data) {
+    return httpServices.post("notes/updateNotes", data);
   }
 };
