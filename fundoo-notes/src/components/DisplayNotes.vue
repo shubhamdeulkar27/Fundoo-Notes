@@ -8,6 +8,7 @@
     <div class="list-title" v-if="!isListEmpty">Pinned</div>
     <div id="note-list" v-if="!isListEmpty">
       <div
+        v-bind:style="{ background: note.color }"
         class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
@@ -26,7 +27,11 @@
           />
           <ReminderIcon />
           <ColorIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
-          <ArchiveIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
+          <ArchiveIcon
+            v-bind:note="note"
+            noteType="Display"
+            @fetchNotes="fetchNotes()"
+          />
           <DeleteIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
         </div>
       </div>
@@ -36,6 +41,7 @@
     <div class="list-title" v-if="!isListEmpty">Others</div>
     <div id="note-list" v-if="!isListEmpty">
       <div
+        v-bind:style="{ background: note.color }"
         class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
@@ -53,7 +59,7 @@
             @fetchNotes="fetchNotes()"
           />
           <ReminderIcon />
-          <ColorIcon />
+          <ColorIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
           <ArchiveIcon
             v-bind:note="note"
             noteType="Display"

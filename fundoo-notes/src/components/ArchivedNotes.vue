@@ -7,6 +7,7 @@
 
     <div id="note-list" v-if="!isNoteListEmpty">
       <div
+        v-bind:style="{ background: note.color }"
         class="card"
         v-for="note in notes.slice().reverse()"
         :key="note.index"
@@ -24,7 +25,7 @@
             @fetchNotes="fetchNotes()"
           />
           <ReminderIcon />
-          <ColorIcon />
+          <ColorIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
           <ArchiveIcon
             v-bind:note="note"
             noteType="Archived"
