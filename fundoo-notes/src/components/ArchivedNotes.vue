@@ -13,8 +13,10 @@
         :key="note.index"
         v-if="!note.isDeleted"
       >
-        <md-card-header class="md-title">{{ note.title }}</md-card-header>
-        <md-card-content>
+        <md-card-header class="md-title" @click.native="callUpdateNote(note)">{{
+          note.title
+        }}</md-card-header>
+        <md-card-content @click.native="callUpdateNote(note)">
           {{ note.description }}
         </md-card-content>
 
@@ -44,6 +46,13 @@
       <span>Error Occured!</span>
       <md-button class="md-primary" @click="isError = false">Ok</md-button>
     </md-snackbar>
+    <md-dialog :md-active.sync="showDialog">
+      <UpdateNote
+        v-bind:note="updateNote"
+        @fetchNotes="fetchNotes()"
+        @closeUpdate="closeUpdate()"
+      />
+    </md-dialog>
   </div>
 </template>
 
@@ -55,6 +64,8 @@ import DeleteIcon from "./DeleteIcon.vue";
 import ColorIcon from "./ColorIcon.vue";
 import ReminderIcon from "./ReminderIcon.vue";
 import PinIcon from "./PinIcon.vue";
+import UpdateNote from "./UpdateNote.vue";
+
 export default {
   name: "notes",
   data() {
@@ -63,7 +74,9 @@ export default {
       isNoteListEmpty: true,
       notes: [],
       isError: false,
-      position: "left"
+      position: "left",
+      showDialog: false,
+      updateNote: Object
     };
   },
   components: {
@@ -72,7 +85,8 @@ export default {
     DeleteIcon,
     ColorIcon,
     ReminderIcon,
-    PinIcon
+    PinIcon,
+    UpdateNote
   },
   created() {
     this.fetchNotes();
@@ -92,6 +106,13 @@ export default {
         .catch(error => {
           this.isError = true;
         });
+    },
+    callUpdateNote(note) {
+      this.updateNote = note;
+      this.showDialog = true;
+    },
+    closeUpdate() {
+      this.showDialog = false;
     }
   }
 };

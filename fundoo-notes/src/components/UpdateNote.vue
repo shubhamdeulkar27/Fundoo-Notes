@@ -62,21 +62,7 @@
           <md-button @click="updateNote()">Close </md-button>
         </div>
       </div>
-      <md-snackbar
-        :md-position="position"
-        :md-active.sync="isPined"
-        :md-duration="duration"
-        md-persitant
-      >
-        <span>Note Pinned</span>
-      </md-snackbar>
-      <md-snackbar
-        :md-position="position"
-        :md-active.sync="isArchived"
-        md-persitant
-      >
-        <span>Note Archived</span>
-      </md-snackbar>
+
       <md-snackbar
         :md-position="position"
         :md-active.sync="isError"
