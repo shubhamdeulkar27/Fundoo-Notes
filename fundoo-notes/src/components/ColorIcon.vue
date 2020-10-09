@@ -3,34 +3,11 @@
     <md-icon @click.native="paletteClicked = !paletteClicked">palette</md-icon>
     <div v-if="paletteClicked" class="palette-content">
       <div
-        id="white"
-        @click="changeNoteColor(note, '#ffffff')"
+        v-for="color in colors"
+        :key="color.index"
+        @click="changeNoteColor(note, color.value)"
         class="circle"
-      ></div>
-      <div
-        id="red"
-        class="circle"
-        @click="changeNoteColor(note, '#f28b82')"
-      ></div>
-      <div
-        id="orange"
-        class="circle"
-        @click="changeNoteColor(note, '#fbbc04')"
-      ></div>
-      <div
-        id="green"
-        class="circle"
-        @click="changeNoteColor(note, '#ccff90')"
-      ></div>
-      <div
-        id="purple"
-        class="circle"
-        @click="changeNoteColor(note, '#d7aefb')"
-      ></div>
-      <div
-        id="teal"
-        class="circle"
-        @click="changeNoteColor(note, '#a7ffeb')"
+        v-bind:style="{ background: color.value }"
       ></div>
     </div>
     <md-snackbar
@@ -52,7 +29,15 @@ export default {
       paletteClicked: false,
       color: "",
       isError: false,
-      position: "left"
+      position: "left",
+      colors: [
+        { name: "white", value: "#ffffff" },
+        { name: "red", value: "#f28b82" },
+        { name: "orange", value: "#fbbc04" },
+        { name: "green", value: "#ccff90" },
+        { name: "purple", value: "#d7aefb" },
+        { name: "teal", value: "#a7ffeb" }
+      ]
     };
   },
   props: {
@@ -75,12 +60,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$red: #f28b82;
-$orange: #fbbc04;
-$white: #ffffff;
-$green: #ccff90;
-$purple: #d7aefb;
-$teal: #a7ffeb;
 .md-icon {
   cursor: pointer;
 }
@@ -103,23 +82,5 @@ $teal: #a7ffeb;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
-}
-#red {
-  background-color: $red;
-}
-#orange {
-  background-color: $orange;
-}
-#white {
-  background-color: $white;
-}
-#green {
-  background-color: $green;
-}
-#purple {
-  background-color: $purple;
-}
-#teal {
-  background-color: $teal;
 }
 </style>

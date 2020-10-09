@@ -54,12 +54,13 @@
             ></md-button
           >
           <div v-if="paletteClicked" class="palette-content">
-            <div id="white" @click="color = '#ffffff'" class="circle"></div>
-            <div id="red" class="circle" @click="color = '#f28b82'"></div>
-            <div id="orange" class="circle" @click="color = '#fbbc04'"></div>
-            <div id="green" class="circle" @click="color = '#ccff90'"></div>
-            <div id="purple" class="circle" @click="color = '#d7aefb'"></div>
-            <div id="teal" class="circle" @click="color = '#a7ffeb'"></div>
+            <div
+              v-for="color in colors"
+              :key="color.index"
+              @click="setColor(color.value)"
+              class="circle"
+              v-bind:style="{ background: color.value }"
+            ></div>
           </div>
           <md-button class="md-icon-button"
             ><md-icon @click.native="isArchived = !isArchived"
@@ -113,7 +114,15 @@ export default {
       fetchNotes: false,
       position: "left",
       paletteClicked: false,
-      color: ""
+      color: "",
+      colors: [
+        { name: "white", value: "#ffffff" },
+        { name: "red", value: "#f28b82" },
+        { name: "orange", value: "#fbbc04" },
+        { name: "green", value: "#ccff90" },
+        { name: "purple", value: "#d7aefb" },
+        { name: "teal", value: "#a7ffeb" }
+      ]
     };
   },
 
@@ -155,18 +164,16 @@ export default {
       this.description = null;
       this.isPined = false;
       this.isArchived = false;
+      this.color = "#ffffff";
+    },
+    setColor(color) {
+      this.color = color;
+      this.paletteClicked = false;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-$red: #f28b82;
-$orange: #fbbc04;
-$white: #ffffff;
-$green: #ccff90;
-$purple: #d7aefb;
-$teal: #a7ffeb;
-
 .add-note {
   box-shadow: 1px 1px 5px rgba($color: gray, $alpha: 0.7);
   border-radius: 5px;
@@ -254,23 +261,5 @@ $teal: #a7ffeb;
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
-}
-#red {
-  background-color: $red;
-}
-#orange {
-  background-color: $orange;
-}
-#white {
-  background-color: $white;
-}
-#green {
-  background-color: $green;
-}
-#purple {
-  background-color: $purple;
-}
-#teal {
-  background-color: $teal;
 }
 </style>

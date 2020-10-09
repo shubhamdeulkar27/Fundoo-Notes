@@ -47,8 +47,10 @@
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && !note.isPined"
       >
-        <md-card-header class="md-title">{{ note.title }}</md-card-header>
-        <md-card-content>
+        <md-card-header @click.native="callUpdateNote(note)" class="md-title">{{
+          note.title
+        }}</md-card-header>
+        <md-card-content @click.native="callUpdateNote(note)">
           {{ note.description }}
         </md-card-content>
 
@@ -68,6 +70,13 @@
           <DeleteIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
         </div>
       </div>
+      <md-dialog :md-active.sync="showDialog">
+        <UpdateNote
+          v-bind:note="updateNote"
+          @fetchNotes="fetchNotes()"
+          @closeUpdate="closeUpdate()"
+        />
+      </md-dialog>
     </div>
   </div>
 </template>
@@ -80,6 +89,7 @@ import DeleteIcon from "./DeleteIcon.vue";
 import ColorIcon from "./ColorIcon.vue";
 import ReminderIcon from "./ReminderIcon.vue";
 import PinIcon from "./PinIcon.vue";
+import UpdateNote from "./UpdateNote.vue";
 
 export default {
   name: "DisplayNotes",
@@ -89,7 +99,8 @@ export default {
     Spinner,
     ColorIcon,
     ReminderIcon,
-    PinIcon
+    PinIcon,
+    UpdateNote
   },
   created() {
     this.fetchNotes();
@@ -108,7 +119,9 @@ export default {
       labelledList: [],
       reminder: TimeRanges,
       collaborators: [],
-      notesLoadding: false
+      notesLoadding: false,
+      showDialog: false,
+      updateNote: null
     };
   },
   methods: {
@@ -130,6 +143,10 @@ export default {
           console.log(error);
           this.notesLoadding = false;
         });
+    },
+    callUpdateNote(note) {
+      this.updateNote = note;
+      this.showDialog = true;
     }
   },
   mounted() {
