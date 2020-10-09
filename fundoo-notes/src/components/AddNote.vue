@@ -8,10 +8,15 @@
         <div><md-icon>insert_photo</md-icon></div>
       </div>
     </div>
-    <div class="add-note note-clicked" v-if="isAddNoteClicked">
+    <div
+      class="add-note note-clicked"
+      v-if="isAddNoteClicked"
+      v-bind:style="{ background: this.color }"
+    >
       <div id="add-note-top">
         <div>
           <input
+            v-bind:style="{ background: this.color }"
             type="text"
             name="NoteTitle"
             placeholder="Title"
@@ -28,6 +33,7 @@
       </div>
       <div>
         <textarea
+          v-bind:style="{ background: this.color }"
           type="text"
           name="NoteContent"
           placeholder="Take a note..."
@@ -42,18 +48,18 @@
             ><md-icon>add_alert</md-icon></md-button
           >
 
-          <div>
-            <md-menu md-direction="top-start">
-              <md-button class="md-icon-button" md-menu-trigger
-                ><md-icon>palette</md-icon></md-button
-              >
-
-              <md-menu-content>
-                <md-menu-item>My Item 1</md-menu-item>
-                <md-menu-item>My Item 2</md-menu-item>
-                <md-menu-item>My Item 3</md-menu-item>
-              </md-menu-content>
-            </md-menu>
+          <md-button class="md-icon-button"
+            ><md-icon @click.native="paletteClicked = !paletteClicked"
+              >palette</md-icon
+            ></md-button
+          >
+          <div v-if="paletteClicked" class="palette-content">
+            <div id="white" @click="color = '#ffffff'" class="circle"></div>
+            <div id="red" class="circle" @click="color = '#f28b82'"></div>
+            <div id="orange" class="circle" @click="color = '#fbbc04'"></div>
+            <div id="green" class="circle" @click="color = '#ccff90'"></div>
+            <div id="purple" class="circle" @click="color = '#d7aefb'"></div>
+            <div id="teal" class="circle" @click="color = '#a7ffeb'"></div>
           </div>
           <md-button class="md-icon-button"
             ><md-icon @click.native="isArchived = !isArchived"
@@ -105,7 +111,9 @@ export default {
       reminder: TimeRanges,
       collaborators: [],
       fetchNotes: false,
-      position: "left"
+      position: "left",
+      paletteClicked: false,
+      color: ""
     };
   },
 
@@ -152,6 +160,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$red: #f28b82;
+$orange: #fbbc04;
+$white: #ffffff;
+$green: #ccff90;
+$purple: #d7aefb;
+$teal: #a7ffeb;
+
 .add-note {
   box-shadow: 1px 1px 5px rgba($color: gray, $alpha: 0.7);
   border-radius: 5px;
@@ -218,5 +233,44 @@ export default {
 }
 #pinned {
   background-color: gray;
+}
+.circle {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: solid rgba($color: gray, $alpha: 0.4) 1px;
+}
+.palette-content {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 1vh;
+  column-gap: 1vw;
+  padding: 1vh;
+  position: absolute;
+  bottom: 8vh;
+  left: 8vw;
+  background-color: white;
+  box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
+  border-radius: 5px;
+}
+#red {
+  background-color: $red;
+}
+#orange {
+  background-color: $orange;
+}
+#white {
+  background-color: $white;
+}
+#green {
+  background-color: $green;
+}
+#purple {
+  background-color: $purple;
+}
+#teal {
+  background-color: $teal;
 }
 </style>
