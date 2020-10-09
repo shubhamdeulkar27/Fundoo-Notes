@@ -5,6 +5,7 @@
       here
     </div>
 
+    <div class="list-title" v-if="!isListEmpty">Pinned</div>
     <div id="note-list" v-if="!isListEmpty">
       <div
         class="card"
@@ -24,7 +25,7 @@
             @fetchNotes="fetchNotes()"
           />
           <ReminderIcon />
-          <ColorIcon />
+          <ColorIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
           <ArchiveIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
           <DeleteIcon v-bind:note="note" @fetchNotes="fetchNotes()" />
         </div>
@@ -32,6 +33,7 @@
     </div>
     <br />
 
+    <div class="list-title" v-if="!isListEmpty">Others</div>
     <div id="note-list" v-if="!isListEmpty">
       <div
         class="card"

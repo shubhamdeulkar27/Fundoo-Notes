@@ -19,7 +19,12 @@
             v-model="title"
           />
         </div>
-        <md-icon @click.native="isPined = !isPined">push_pin</md-icon>
+
+        <md-button class="md-icon-button">
+          <md-icon @click.native="isPined = !isPined"
+            >push_pin</md-icon
+          ></md-button
+        >
       </div>
       <div>
         <textarea
@@ -33,10 +38,31 @@
       </div>
       <div id="add-note-bottom">
         <div id="add-note-b-left">
-          <md-icon>add_alert</md-icon>
-          <md-icon>palette</md-icon>
-          <md-icon @click.native="isArchived = !isArchived">archive</md-icon>
-          <md-icon @click.native="clearData()">delete</md-icon>
+          <md-button class="md-icon-button"
+            ><md-icon>add_alert</md-icon></md-button
+          >
+
+          <div>
+            <md-menu md-direction="top-start">
+              <md-button class="md-icon-button" md-menu-trigger
+                ><md-icon>palette</md-icon></md-button
+              >
+
+              <md-menu-content>
+                <md-menu-item>My Item 1</md-menu-item>
+                <md-menu-item>My Item 2</md-menu-item>
+                <md-menu-item>My Item 3</md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </div>
+          <md-button class="md-icon-button"
+            ><md-icon @click.native="isArchived = !isArchived"
+              >archive</md-icon
+            ></md-button
+          >
+          <md-button class="md-icon-button"
+            ><md-icon @click.native="clearData()">delete</md-icon></md-button
+          >
         </div>
         <div id="add-note-b-right">
           <md-button @click="AddNewNote()">Close </md-button>

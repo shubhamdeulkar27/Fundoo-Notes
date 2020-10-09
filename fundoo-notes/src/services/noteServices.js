@@ -24,5 +24,8 @@ export default {
   },
   deleteNoteForever(data) {
     return httpServices.post("notes/deleteForeverNotes", data);
+  },
+  changeNoteColor(data) {
+    return httpServices.post("notes/changesColorNotes", data);
   }
 };
