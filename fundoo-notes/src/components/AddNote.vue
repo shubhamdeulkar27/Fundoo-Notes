@@ -26,9 +26,7 @@
         </div>
 
         <md-button class="md-icon-button">
-          <md-icon @click.native="isPined = !isPined"
-            >push_pin</md-icon
-          ></md-button
+          <md-icon @click.native="pinNote()">push_pin</md-icon></md-button
         >
       </div>
       <div>
@@ -63,9 +61,7 @@
             ></div>
           </div>
           <md-button class="md-icon-button"
-            ><md-icon @click.native="isArchived = !isArchived"
-              >archive</md-icon
-            ></md-button
+            ><md-icon @click.native="archiveNote()">archive</md-icon></md-button
           >
           <md-button class="md-icon-button"
             ><md-icon @click.native="clearData()">delete</md-icon></md-button
@@ -169,6 +165,12 @@ export default {
     setColor(color) {
       this.color = color;
       this.paletteClicked = false;
+    },
+    archiveNote() {
+      this.isArchived = !this.isArchived;
+    },
+    pinNote() {
+      this.isPined = !this.isArchived;
     }
   }
 };

@@ -94,7 +94,7 @@ import {
   required,
   email,
   minLength,
-  maxLength,
+  maxLength
 } from "vuelidate/lib/validators";
 export default {
   name: "Login",
@@ -103,26 +103,26 @@ export default {
     return {
       form: {
         EmailId: null,
-        Password: null,
+        Password: null
       },
       position: "center",
       sending: false,
       isLogin: false,
       invalidCredentials: false,
-      token: null,
+      token: null
     };
   },
   validations: {
     form: {
       EmailId: {
         required,
-        minLength: minLength(6),
+        minLength: minLength(6)
       },
       Password: {
         required,
-        minLength: minLength(6),
-      },
-    },
+        minLength: minLength(6)
+      }
+    }
   },
   methods: {
     login() {
@@ -130,15 +130,16 @@ export default {
       let user = {
         email: this.form.EmailId,
         password: this.form.Password,
-        cartId: "",
+        cartId: ""
       };
       userService
         .login(user)
-        .then((result) => {
+        .then(result => {
           if (result.status == "200") {
             this.isLogin = true;
-            //console.log("Logged In", result.data.id);
+            //console.log("Logged In", result);
             localStorage.setItem("fundoo-token", result.data.id);
+            localStorage.setItem("fundoo-user", result.data);
             window.location.href = "/dashboard";
           }
         })
@@ -146,7 +147,7 @@ export default {
           this.sending = false;
           this.clearForm();
         })
-        .catch((error) => {
+        .catch(error => {
           console.log("Error:", error.response.status);
           if (error.response.status == "401") {
             this.invalidCredentials = true;
@@ -160,7 +161,7 @@ export default {
 
       if (field) {
         return {
-          "md-invalid": field.$invalid && field.$dirty,
+          "md-invalid": field.$invalid && field.$dirty
         };
       }
     },
@@ -175,8 +176,8 @@ export default {
       this.$v.$reset();
       this.form.EmailId = null;
       this.form.Password = null;
-    },
-  },
+    }
+  }
 };
 </script>
 

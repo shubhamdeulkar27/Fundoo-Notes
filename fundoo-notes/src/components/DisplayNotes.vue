@@ -14,8 +14,10 @@
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && note.isPined"
       >
-        <md-card-header class="md-title">{{ note.title }}</md-card-header>
-        <md-card-content>
+        <md-card-header class="md-title" @click.native="callUpdateNote(note)">{{
+          note.title
+        }}</md-card-header>
+        <md-card-content @click.native="callUpdateNote(note)">
           {{ note.description }}
         </md-card-content>
 

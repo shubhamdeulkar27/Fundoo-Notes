@@ -2,12 +2,12 @@
   <div id="update-container">
     <div
       class="add-note note-clicked"
-      v-bind:style="{ background: note.color }"
+      v-bind:style="{ background: this.color }"
     >
       <div id="add-note-top">
         <div>
           <input
-            v-bind:style="{ background: note.color }"
+            v-bind:style="{ background: this.color }"
             type="text"
             name="NoteTitle"
             placeholder="Title"
@@ -17,14 +17,12 @@
         </div>
 
         <md-button class="md-icon-button">
-          <md-icon @click.native="isPined = !isPined"
-            >push_pin</md-icon
-          ></md-button
+          <md-icon @click.native="pinNote()">push_pin</md-icon></md-button
         >
       </div>
       <div>
         <textarea
-          v-bind:style="{ background: note.color }"
+          v-bind:style="{ background: this.color }"
           type="text"
           name="NoteContent"
           placeholder="Take a note..."
@@ -52,12 +50,9 @@
               class="circle"
               v-bind:style="{ background: color.value }"
             ></div>
-            <div id="teal" class="circle" @click="color = '#a7ffeb'"></div>
           </div>
           <md-button class="md-icon-button"
-            ><md-icon @click.native="isArchived = !isArchived"
-              >archive</md-icon
-            ></md-button
+            ><md-icon @click.native="archiveNote()">archive</md-icon></md-button
           >
           <md-button class="md-icon-button"
             ><md-icon @click.native="clearData()">delete</md-icon></md-button
@@ -70,6 +65,7 @@
       <md-snackbar
         :md-position="position"
         :md-active.sync="isPined"
+        :md-duration="duration"
         md-persitant
       >
         <span>Note Pinned</span>
@@ -80,6 +76,13 @@
         md-persitant
       >
         <span>Note Archived</span>
+      </md-snackbar>
+      <md-snackbar
+        :md-position="position"
+        :md-active.sync="isError"
+        md-persitant
+      >
+        <span>Error Occured!</span>
       </md-snackbar>
     </div>
   </div>
@@ -105,7 +108,6 @@ export default {
       collaborators: [],
       position: "left",
       paletteClicked: false,
-      color: "",
       colors: [
         { name: "white", value: "#ffffff" },
         { name: "red", value: "#f28b82" },
@@ -114,15 +116,30 @@ export default {
         { name: "purple", value: "#d7aefb" },
         { name: "teal", value: "#a7ffeb" }
       ],
-      isError: false
+      isError: false,
+      duration: 1000,
+      showSnackbar: true
     };
   },
   methods: {
     updateNote() {
+      if (
+        this.title == this.note["title"] &&
+        this.description == this.note["description"] &&
+        this.color == this.note["color"] &&
+        this.isArchived == this.note["isArchived"] &&
+        this.isPined == this.note["isPined"]
+      ) {
+        this.$emit("closeUpdate");
+        return;
+      }
       let updateData = {
         description: this.description,
         noteId: this.note.id,
-        title: this.title
+        title: this.title,
+        isArchived: this.isArchived,
+        isPined: this.isPined,
+        color: this.color
       };
       noteServices
         .updateNote(updateData)
@@ -146,6 +163,12 @@ export default {
     setColor(color) {
       this.color = color;
       this.paletteClicked = false;
+    },
+    archiveNote() {
+      this.isArchived = !this.isArchived;
+    },
+    pinNote() {
+      this.isPined = !this.isArchived;
     }
   }
 };
@@ -218,5 +241,27 @@ export default {
 }
 #pinned {
   background-color: gray;
+}
+.circle {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  border: solid rgba($color: gray, $alpha: 0.4) 1px;
+}
+.palette-content {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 1vh;
+  column-gap: 1vw;
+  padding: 1vh;
+  position: absolute;
+  bottom: 8vh;
+  left: 8vw;
+  background-color: white;
+  box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
+  border-radius: 5px;
+  z-index: 4;
 }
 </style>
