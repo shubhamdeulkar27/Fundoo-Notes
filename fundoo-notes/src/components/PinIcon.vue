@@ -54,6 +54,6 @@ export default {
   cursor: pointer;
 }
 #pinned {
-  color: orange;
+  color: red;
 }
 </style>
