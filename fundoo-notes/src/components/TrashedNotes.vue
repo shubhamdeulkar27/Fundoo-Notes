@@ -8,7 +8,7 @@
     <div id="note-list" v-if="!isNoteListEmpty">
       <div
         class="card"
-        v-for="note in notes.slice().reverse()"
+        v-for="note in filteredNotes.slice().reverse()"
         :key="note.index"
         v-bind:style="{ background: note.color }"
       >
@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import { EventBus } from "../event-bus.js";
 import noteServices from "../services/noteServices.js";
 import Spinner from "vue-simple-spinner";
 import RestoreIcon from "./RestoreIcon.vue";
@@ -53,11 +54,24 @@ export default {
       isNoteListEmpty: true,
       notes: [],
       isError: false,
-      position: "left"
+      position: "left",
+      search: ""
     };
   },
   created() {
     this.fetchNotes();
+  },
+  mounted() {
+    EventBus.$on("Serached", search => {
+      this.search = search;
+    });
+  },
+  computed: {
+    filteredNotes: function() {
+      return this.notes.filter(note => {
+        return note.title.match(this.search);
+      });
+    }
   },
   methods: {
     fetchNotes() {

@@ -9,7 +9,7 @@
       <div
         v-bind:style="{ background: note.color }"
         class="card"
-        v-for="note in notes.slice().reverse()"
+        v-for="note in filteredNotes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted"
       >
@@ -65,6 +65,7 @@ import ColorIcon from "./ColorIcon.vue";
 import ReminderIcon from "./ReminderIcon.vue";
 import PinIcon from "./PinIcon.vue";
 import UpdateNote from "./UpdateNote.vue";
+import { EventBus } from "../event-bus.js";
 
 export default {
   name: "notes",
@@ -76,7 +77,8 @@ export default {
       isError: false,
       position: "left",
       showDialog: false,
-      updateNote: Object
+      updateNote: Object,
+      search: ""
     };
   },
   components: {
@@ -90,6 +92,18 @@ export default {
   },
   created() {
     this.fetchNotes();
+  },
+  mounted() {
+    EventBus.$on("Serached", search => {
+      this.search = search;
+    });
+  },
+  computed: {
+    filteredNotes: function() {
+      return this.notes.filter(note => {
+        return note.title.match(this.search);
+      });
+    }
   },
   methods: {
     fetchNotes() {
