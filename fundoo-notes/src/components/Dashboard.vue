@@ -17,9 +17,10 @@
         </span>
         <input
           type="text"
-          name="search"
+          v-model="search"
           placeholder="Search"
           id="serach-input"
+          @keyup="searched()"
         />
       </div>
       <div class="md-toolbar-section-end">
@@ -89,6 +90,7 @@
   </div>
 </template>
 <script>
+import { EventBus } from "../event-bus.js";
 export default {
   name: "Dashboard",
   created() {
@@ -103,12 +105,16 @@ export default {
       localStorage.removeItem("fundoo-user-lastName");
       localStorage.removeItem("fundoo-user-email");
       window.location.href = "/login";
+    },
+    searched() {
+      EventBus.$emit("Serached", this.search);
     }
   },
   data: () => ({
     showNavigation: false,
     showSidepanel: false,
-    profileData: { firstName: null, lastName: null, email: null }
+    profileData: { firstName: null, lastName: null, email: null },
+    search: ""
   })
 };
 </script>

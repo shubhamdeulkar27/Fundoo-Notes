@@ -10,7 +10,7 @@
       <div
         v-bind:style="{ background: note.color }"
         class="card"
-        v-for="note in notes.slice().reverse()"
+        v-for="note in filteredNotes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && note.isPined"
       >
@@ -45,7 +45,7 @@
       <div
         v-bind:style="{ background: note.color }"
         class="card"
-        v-for="note in notes.slice().reverse()"
+        v-for="note in filteredNotes.slice().reverse()"
         :key="note.index"
         v-if="!note.isDeleted && !note.isArchived && !note.isPined"
       >
@@ -123,7 +123,8 @@ export default {
       collaborators: [],
       notesLoadding: false,
       showDialog: false,
-      updateNote: null
+      updateNote: null,
+      search: ""
     };
   },
   methods: {
@@ -158,6 +159,16 @@ export default {
     EventBus.$on("FetchNotes", fetchNotes => {
       this.fetchNotes();
     });
+    EventBus.$on("Serached", search => {
+      this.search = search;
+    });
+  },
+  computed: {
+    filteredNotes: function() {
+      return this.notes.filter(note => {
+        return note.title.match(this.search);
+      });
+    }
   }
 };
 </script>
