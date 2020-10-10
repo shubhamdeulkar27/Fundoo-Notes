@@ -1,5 +1,5 @@
 <template>
-  <div id="update-container">
+  <div id="update-container" v-bind:style="{ background: this.color }">
     <div
       class="add-note note-clicked"
       v-bind:style="{ background: this.color }"
@@ -163,6 +163,7 @@ export default {
 #update-container {
   width: auto;
   height: auto;
+  overflow: auto;
 }
 .add-note {
   box-shadow: 1px 1px 5px rgba($color: gray, $alpha: 0.7);
@@ -249,5 +250,47 @@ export default {
   box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
   z-index: 4;
+}
+@media (min-width: 320px) and (max-width: 360px) {
+  .add-note {
+    width: 100vw;
+    height: 100vh;
+  }
+  #add-note-title {
+    font-size: 15px;
+  }
+  .add-note .note-clicked {
+    position: relative;
+  }
+
+  #push-pin {
+    position: absolute;
+    top: 0.4vh;
+    right: 0vw;
+  }
+  .note-text {
+    min-height: 80vh;
+  }
+}
+@media (min-width: 570px) and (max-width: 640px) {
+  .add-note {
+    width: 80vw;
+    height: 70vh;
+  }
+  #add-note-title {
+    font-size: 15px;
+  }
+  .add-note .note-clicked {
+    position: relative;
+  }
+
+  #push-pin {
+    position: unset;
+    top: 0.4vh;
+    right: 0vw;
+  }
+  .note-text {
+    min-height: 40vh;
+  }
 }
 </style>

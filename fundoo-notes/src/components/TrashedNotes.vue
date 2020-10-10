@@ -141,4 +141,39 @@ export default {
   opacity: 0%;
   width: 6vw;
 }
+@media (min-width: 320px) and (max-width: 360px) {
+  #trashed-container {
+    width: 65vw;
+    left: 22vw;
+    position: relative;
+    top: 10vh;
+    height: auto;
+  }
+  #note-list {
+    grid-template-columns: 1fr;
+    row-gap: 3vh;
+  }
+  .cardActions {
+    opacity: 100%;
+    width: 17vw;
+  }
+  .md-card-content {
+    margin-bottom: 2vh;
+  }
+}
+//Media query For Moto G4 Horizontal.
+@media (min-width: 570px) and (max-width: 640px) {
+  #trashed-container {
+    width: 70vw;
+    left: 15vw;
+  }
+  .cardActions {
+    opacity: 100%;
+  }
+  #note-list {
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 5vh;
+    column-gap: 2vw;
+  }
+}
 </style>

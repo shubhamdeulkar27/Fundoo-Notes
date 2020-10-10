@@ -28,7 +28,7 @@
             {{ this.profileData.firstName[0] }}
           </div>
 
-          <md-menu-content>
+          <md-menu-content id="profile-content">
             <md-menu-item>
               <div id="profile-logo">
                 {{ this.profileData.firstName[0] }}
@@ -205,5 +205,113 @@ export default {
   display: inline-block;
   position: absolute;
   left: 9vw;
+}
+.md-content {
+  min-height: 95vh;
+}
+.md-menu-item {
+  text-align: center;
+}
+//Moto G4
+@media (min-width: 320px) and (max-width: 360px) {
+  #serach-bar {
+    width: 40vw;
+  }
+  #serach-input {
+    width: 30vw;
+  }
+  .fa-sticky-note:before {
+    display: none;
+  }
+  .md-toolbar.md-theme-default.md-primary .md-title {
+    margin-left: 5px;
+  }
+  #profile-logo {
+    height: 40px;
+    width: 40px;
+    font-size: 35px;
+    line-height: 35px;
+    padding-left: 3vw;
+    position: absolute;
+    left: 30vw;
+  }
+  .md-drawer {
+    width: 100vw;
+    height: auto;
+  }
+}
+//Media query For Moto G4 Horizontal.
+@media (min-width: 570px) and (max-width: 640px) {
+  .md-drawer {
+    width: 28vw;
+    height: 86vh;
+  }
+  .md-menu-content {
+    max-height: 60vh;
+  }
+  #profile-content {
+    overflow: none;
+  }
+  #profile-logo {
+    height: 40px;
+    width: 40px;
+    font-size: 35px;
+    line-height: 35px;
+    padding-left: 1.7vw;
+    position: absolute;
+    left: 19vw;
+  }
+}
+
+//Ipad
+@media (min-width: 700px) and (max-width: 768px) {
+  #serach-bar {
+    width: 40vw;
+  }
+  #serach-input {
+    width: 30vw;
+    font-size: 25px;
+    line-height: 25px;
+  }
+  .fa-sticky-note:before {
+    font-size: 35px;
+  }
+  .md-toolbar.md-theme-default.md-primary .md-title {
+    font-size: 35px;
+    line-height: 35px;
+  }
+  #profile-logo {
+    height: 40px;
+    width: 40px;
+    font-size: 35px;
+    line-height: 35px;
+    padding-left: 1.3vw;
+    position: absolute;
+    left: 15vw;
+  }
+  #profile {
+    height: 40px;
+    width: 40px;
+    color: white;
+    font-size: 35px;
+    line-height: 35px;
+
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    right: 2vw;
+    cursor: pointer;
+  }
+  .md-drawer {
+    width: 100vw;
+    height: auto;
+  }
+  .md-list-item-container {
+    font-size: 18px;
+  }
+}
+//Ipad Horizontal
+@media (min-width: 1000px) and (max-width: 1024px) {
 }
 </style>

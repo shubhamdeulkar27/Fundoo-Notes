@@ -25,7 +25,7 @@
           />
         </div>
 
-        <md-button class="md-icon-button">
+        <md-button id="push-pin" class="md-icon-button">
           <md-icon @click.native="pinNote()">push_pin</md-icon></md-button
         >
       </div>
@@ -42,7 +42,7 @@
       </div>
       <div id="add-note-bottom">
         <div id="add-note-b-left">
-          <md-button class="md-icon-button"
+          <md-button id="reminder" class="md-icon-button"
             ><md-icon>add_alert</md-icon></md-button
           >
 
@@ -67,8 +67,10 @@
             ><md-icon @click.native="clearData()">delete</md-icon></md-button
           >
         </div>
-        <div id="add-note-b-right">
-          <md-button @click="AddNewNote()">Close </md-button>
+        <div>
+          <md-button id="add-note-b-right" @click="AddNewNote()"
+            >Close
+          </md-button>
         </div>
       </div>
       <md-snackbar
@@ -263,5 +265,33 @@ export default {
   background-color: white;
   box-shadow: 0px 0px 5px 2px rgba($color: gray, $alpha: 0.4);
   border-radius: 5px;
+}
+//Moto G4
+@media (min-width: 320px) and (max-width: 360px) {
+  .add-note {
+    width: 55vw;
+  }
+  #add-note-title {
+    font-size: 15px;
+  }
+  .add-note .note-clicked {
+    position: relative;
+  }
+  #reminder {
+    position: absolute;
+    top: 0vh;
+    right: 10vw;
+  }
+  #push-pin {
+    position: absolute;
+    top: 0.4vh;
+    right: 0vw;
+  }
+  #add-note-b-right {
+    position: absolute;
+    right: -4vw;
+    bottom: -0.7vh;
+    font-size: 13px;
+  }
 }
 </style>

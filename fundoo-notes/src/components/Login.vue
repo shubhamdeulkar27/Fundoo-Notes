@@ -105,7 +105,7 @@ export default {
         EmailId: null,
         Password: null
       },
-      position: "center",
+      position: "left",
       sending: false,
       isLogin: false,
       invalidCredentials: false,
@@ -242,5 +242,117 @@ export default {
 }
 .blue {
   color: blue;
+}
+//Moto G4
+@media (min-width: 320px) and (max-width: 360px) {
+  #container {
+    width: 80vw;
+    left: 10vw;
+  }
+}
+//Media query For Moto G4 Horizontal.
+@media (min-width: 570px) and (max-width: 640px) {
+  #container {
+    width: 80vw;
+    left: 10vw;
+    top: 5vh;
+    height: 90vh;
+  }
+  #login-title {
+    display: none;
+  }
+  #login {
+    font-size: 20px;
+  }
+  .md-field {
+    margin-bottom: 5px;
+  }
+}
+
+//Ipad
+@media (min-width: 700px) and (max-width: 768px) {
+  #container {
+    width: 80vw;
+    left: 10vw;
+    position: relative;
+  }
+  #login-title {
+    font-size: 40px;
+  }
+  #login {
+    font-size: 45px;
+    position: absolute;
+    top: 16vh;
+    left: 30vw;
+  }
+  #login-helper {
+    font-size: 31px;
+    position: absolute;
+    top: 25vh;
+    left: 15vw;
+  }
+  .md-field {
+    font-size: 30px;
+  }
+  #form-container {
+    position: relative;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+  }
+  .md-card-actions {
+    position: absolute;
+    bottom: -35vh;
+    width: 63vw;
+  }
+  .md-button.md-dense {
+    font-size: 22px;
+  }
+  .md-button {
+    font-size: 22px;
+  }
+}
+//Ipad Horizontal
+@media (min-width: 1000px) and (max-width: 1024px) {
+  #container {
+    width: 80vw;
+    left: 10vw;
+    position: relative;
+  }
+  #login-title {
+    font-size: 30px;
+  }
+  #login {
+    font-size: 35px;
+    position: absolute;
+    top: 20vh;
+    left: 35vw;
+  }
+  #login-helper {
+    font-size: 25px;
+    position: absolute;
+    top: 30vh;
+    left: 25vw;
+  }
+  .md-field {
+    font-size: 30px;
+  }
+  #form-container {
+    position: relative;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+  }
+  .md-card-actions {
+    position: absolute;
+    bottom: -35vh;
+    width: 63vw;
+  }
+  .md-button.md-dense {
+    font-size: 20px;
+  }
+  .md-button {
+    font-size: 20px;
+  }
 }
 </style>
