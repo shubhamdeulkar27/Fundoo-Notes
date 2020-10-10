@@ -137,9 +137,14 @@ export default {
         .then(result => {
           if (result.status == "200") {
             this.isLogin = true;
-            //console.log("Logged In", result);
+            //console.log("Logged In", result.data.email);
             localStorage.setItem("fundoo-token", result.data.id);
-            localStorage.setItem("fundoo-user", result.data);
+            localStorage.setItem(
+              "fundoo-user-firstName",
+              result.data.firstName
+            );
+            localStorage.setItem("fundoo-user-lastName", result.data.lastName);
+            localStorage.setItem("fundoo-user-email", result.data.email);
             window.location.href = "/dashboard";
           }
         })

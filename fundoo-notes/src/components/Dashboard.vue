@@ -22,7 +22,34 @@
           id="serach-input"
         />
       </div>
-      <div class="md-toolbar-section-end"></div>
+      <div class="md-toolbar-section-end">
+        <md-menu md-direction="bottom-end">
+          <div id="profile" md-menu-trigger>
+            {{ this.profileData.firstName[0] }}
+          </div>
+
+          <md-menu-content>
+            <md-menu-item>
+              <div id="profile-logo">
+                {{ this.profileData.firstName[0] }}
+              </div></md-menu-item
+            >
+            <md-menu-item>{{
+              profileData.firstName.charAt(0).toUpperCase() +
+                profileData.firstName.slice(1) +
+                " " +
+                profileData.lastName.charAt(0).toUpperCase() +
+                profileData.lastName.slice(1)
+            }}</md-menu-item>
+            <md-menu-item>{{ profileData.email }}</md-menu-item>
+            <md-menu-item
+              ><md-button class="md-accent" @click="logout()"
+                >Sign out</md-button
+              ></md-menu-item
+            >
+          </md-menu-content>
+        </md-menu>
+      </div>
     </md-toolbar>
 
     <div id="sub-container">
@@ -64,9 +91,24 @@
 <script>
 export default {
   name: "Dashboard",
+  created() {
+    this.profileData.firstName = localStorage.getItem("fundoo-user-firstName");
+    this.profileData.lastName = localStorage.getItem("fundoo-user-lastName");
+    this.profileData.email = localStorage.getItem("fundoo-user-email");
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("fundoo-token");
+      localStorage.removeItem("fundoo-user-firstName");
+      localStorage.removeItem("fundoo-user-lastName");
+      localStorage.removeItem("fundoo-user-email");
+      window.location.href = "/login";
+    }
+  },
   data: () => ({
     showNavigation: false,
-    showSidepanel: false
+    showSidepanel: false,
+    profileData: { firstName: null, lastName: null, email: null }
   })
 };
 </script>
@@ -138,5 +180,30 @@ export default {
 #sub-container {
   display: flex;
   flex-direction: row;
+}
+#profile {
+  height: 25px;
+  width: 25px;
+  color: white;
+  font-size: 20px;
+  padding-top: 1px;
+  background-color: blue;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  right: 2vw;
+  cursor: pointer;
+}
+#profile-logo {
+  height: 40px;
+  width: 40px;
+  color: white;
+  font-size: 30px;
+  padding-left: 0.9vw;
+  background-color: blue;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 9vw;
 }
 </style>

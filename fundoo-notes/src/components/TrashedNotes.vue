@@ -135,9 +135,10 @@ export default {
 .cardActions {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: space-between;
   padding: 1vw;
   padding-bottom: 1vh;
   opacity: 0%;
+  width: 6vw;
 }
 </style>
